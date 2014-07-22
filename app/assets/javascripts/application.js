@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-jvectormap-1.2.2.min
+//= require jquery-jvectormap-world-mill-en
 //= require turbolinks
 //= require_tree .

@@ -1,1 +1,16 @@
 <h1>WorldMap</h1>
+
+
+<%= form_tag do %>
+
+  <%= label_tag(:indicators, "Pick one:") %>
+  <%= select_tag(:indicators, options_for_select([['GDP per capita', 1], ['Population', 2]]), class: 'drop_down') %>
+  <%= submit_tag "Show Map", class: "show_map_button" %>
+
+<% end %>
+
+<div id="map-wrapper">
+  <div class="world-map"></div>
+</div>
+
+
