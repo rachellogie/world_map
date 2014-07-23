@@ -1,24 +1,29 @@
 $(document).ready(function () {
 
   var colors = [
-    {'#ffd5ea': '#ff0e87'}
+    ['#ffd5ea', '#ff0e87'],
+    ['#C7FFF5', '#026E5A'],
+    ['#FFD1A8', '#7D3C027']
   ];
 
-  var map_data = {
+  var my_data = {
   };
 
   var counter = 0;
 
   function make_map(map_data, choice) {
     choice = choice || 'no data';
+    var color1 = colors[counter % colors.length][0];
+    var color2 = colors[counter % colors.length][1];
+    console.log(color1);
+
     $('.world-map').vectorMap({
       map: 'world_mill_en',
       series: {
         regions: [
           {
             values: map_data,
-//            scale: [Object.keys(colors[counter]), Object.values(colors[counter])],
-            scale: ['#ffd5ea', '#ff0e87'],
+            scale: [color1, color2],
             normalizeFunction: 'polynomial'
           }
         ]
@@ -27,10 +32,10 @@ $(document).ready(function () {
         el.html(el.html() + ' (' + choice + ' - ' + map_data[code] + ')');
       }
     });
-    counter ++;
+    counter++;
   }
 
-  make_map(map_data);
+  make_map(my_data);
 
 
   //when the show map button is clicked, populate the map
@@ -73,11 +78,14 @@ $(document).ready(function () {
         var countryId = name['country']['id'];
         var value = parseInt(name['value']);
         //only if the country has a value
-        if(!isNaN(value)){
-          map_data[countryId] = value;
+        if (!isNaN(value)) {
+          my_data[countryId] = value;
         }
       });
-      $('#map-wrapper').append(make_map(map_data, choice));
+
+      $('.world-map').empty();
+
+      make_map(my_data, choice);
     });
 
 
@@ -87,8 +95,8 @@ $(document).ready(function () {
   function get_api_request(choice) {
     if (choice == 'GDP per capita') {
       return "http://api.worldbank.org/countries/indicators/NY.GDP.PCAP.CD/?date=2010:2010&per_page=300&format=jsonP&prefix=?"
-    } else if(choice == 'Population'){
-        return "http://api.worldbank.org/countries/all/indicators/SP.POP.TOTL?date=2010:2010&per_page=300&format=jsonP&prefix=?"
+    } else if (choice == 'Population') {
+      return "http://api.worldbank.org/countries/all/indicators/SP.POP.TOTL?date=2010:2010&per_page=300&format=jsonP&prefix=?"
     }
   }
 
